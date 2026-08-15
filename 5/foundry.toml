@@ -1,0 +1,5 @@
+[profile.default]
+src = "honeypot-vault"
+test = "verify"
+solc_version = "0.8.35"
+skip = ["honeypot-vault/Challenge.starter.t.sol"]

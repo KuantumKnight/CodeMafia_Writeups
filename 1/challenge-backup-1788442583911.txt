@@ -1,0 +1,42 @@
+BACKUP NODE — POSTMORTEM LOG // recovered off a dying disk, multiple
+daemons were writing to the same file, nothing got cleaned up
+============================================================
+Status line, pulled straight off the node (ROT13):
+  zvtengvba_irevsvrq_pbzcyrgr
+
+Log tail, everything after the status line:
+
+  [node7] Recovery script flagged the archive as partial
+  [sync] Retry queue drained, nothing left pending
+  [node7] Checksum retries capped at zero
+  [node7] Operator received no response, only echo
+  [node7] The last line simply read: rollback
+  [gc] Memory pressure back to normal levels
+  [node9] Heartbeat missed twice, marked degraded
+  [node7] The filename was partially recovered as node_
+  [node3] Backup rotation policy updated to weekly
+  [node9] Latency spike traced to a bad cable
+  [node7] Timestamp drifted by exactly one delta
+  [node7] The watchdog logged a silent reset
+  [watchdog] Override code flagged as TH1S_ISN0T_1T, discard
+  [node7] Second file arrived tagged as archive_
+  [node7] Manual override required an immediate restart
+  [watchdog] Alert acknowledged by on-call, closing ticket
+  [gc] Garbage collector reclaimed 4 stale blocks
+  [node7] Backup path resolved to an empty hash
+  [node7] Replica count dropped from five to 3
+  [node7] The corrupted header read only as meta_
+  [node3] Snapshot completed with zero warnings
+  [node7] Final retry attempt was numbered 3
+  [node7] The operator marked the ticket open
+  [gc] Compaction pass finished in 12 seconds
+  [sync] Sync daemon skipped node9 after timeout
+  [node7] Last entry before the log just stopped, unresolved
+  [node3] Disk usage climbed to 91 percent overnight
+
+>>> SYSTEM NOTE <<<
+Status line above has already been checked against the recovery
+manifest and matches the confirmed build. The log tail below it is
+just stderr spam from several daemons that all happened to be
+writing at once — line breaks, tags, and trailing characters carry
+no info. Decode the status line, submit that.
